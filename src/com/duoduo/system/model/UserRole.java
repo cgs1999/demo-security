@@ -1,7 +1,7 @@
 package com.duoduo.system.model;
 
 /**
- * TODO
+ * 用户角色对应关系
  * @author chengesheng@gmail.com
  * @date 2014-5-30 上午12:52:39
  * @version 1.0.0

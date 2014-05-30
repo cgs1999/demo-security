@@ -13,13 +13,14 @@ import net.sf.json.JSONObject;
 @SuppressWarnings("serial")
 public class IdEntity implements Serializable {
 
-	private Integer id;
+	/** 自增ID */
+	private Long id;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -31,13 +32,10 @@ public class IdEntity implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (obj == null || getClass() != obj.getClass()) return false;
+		if (obj == null || !getClass().getName().equals(obj.getClass().getName())) return false;
 
 		IdEntity entity = (IdEntity) obj;
-
-		if (getId() != null ? !getId().equals(entity.getId()) : entity.getId() != null) return false;
-
-		return true;
+		return (hashCode() != 0 && entity.hashCode() != 0) ? hashCode() == entity.hashCode() : false;
 	}
 
 	@Override

@@ -12,7 +12,9 @@ public class Page<T> {
 
 	public static final int LIMIT_NO_PAGINATION = -1;
 
+	/** 分页开始索引 */
 	private int start = 0;
+	/** 每页显示的数量 */
 	private int limit = 20;
 	/** 记录总数 */
 	private long total = 0;
