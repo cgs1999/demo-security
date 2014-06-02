@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.duoduo.core.dao.BaseDao;
-import com.duoduo.core.model.Page;
+import com.duoduo.core.vo.Page;
 import com.duoduo.system.model.User;
 
 /**

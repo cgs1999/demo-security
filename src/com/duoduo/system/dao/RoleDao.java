@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.duoduo.core.dao.BaseDao;
-import com.duoduo.core.model.Page;
+import com.duoduo.core.vo.Page;
 import com.duoduo.system.model.Role;
 
 /**
@@ -62,7 +63,7 @@ public class RoleDao extends BaseDao {
 	/**
 	 * 根据名称获取角色
 	 */
-	public Role getByAccount(String name) {
+	public Role getByName(String name) {
 		try {
 			Role role = super.getJdbcTemplate().queryForObject(getByNameSql, entityRowMapper, name);
 			return role;
@@ -118,6 +119,20 @@ public class RoleDao extends BaseDao {
 	public boolean delete(String id) {
 		super.getJdbcTemplate().update(deleteSql, id);
 		return true;
+	}
+
+	private static final String listByUserIdSql = "select r.* from sys_role r"
+			+ " left join sys_user_role ur on ur.role_id = r.id where ur.user_id = ?";
+
+	/**
+	 * 获取用户的角色列表
+	 */
+	public List<Role> listByUserId(String userId) {
+		try {
+			return super.getJdbcTemplate().query(listByUserIdSql, entityRowMapper, userId);
+		} catch (DataAccessException e) {
+		}
+		return null;
 	}
 
 	/**

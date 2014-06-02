@@ -1,4 +1,4 @@
-package com.duoduo.core.model;
+package com.duoduo.core.vo;
 
 import java.util.List;
 

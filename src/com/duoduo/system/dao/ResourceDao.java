@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.duoduo.core.dao.BaseDao;
-import com.duoduo.core.model.Page;
+import com.duoduo.core.vo.Page;
 import com.duoduo.system.model.Resource;
 
 /**
@@ -65,7 +65,7 @@ public class ResourceDao extends BaseDao {
 	/**
 	 * 根据名称获取资源
 	 */
-	public Resource getByAccount(String name) {
+	public Resource getByName(String name) {
 		try {
 			Resource resource = super.getJdbcTemplate().queryForObject(getByNameSql, entityRowMapper, name);
 			return resource;

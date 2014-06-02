@@ -8,7 +8,9 @@ package com.duoduo.system.model;
  */
 public class UserRole {
 
+	/** 用户ID */
 	private Long userId;
+	/** 角色ID */
 	private Long roleId;
 
 	public Long getUserId() {
