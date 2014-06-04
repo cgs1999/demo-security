@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
@@ -37,6 +38,12 @@ public class ResourceDao extends BaseDao {
 			resource.setType(rs.getString("type"));
 			resource.setUrl(rs.getString("url"));
 			resource.setParentId(rs.getLong("parent_id"));
+
+			try {
+				resource.setParentName(rs.getString("parentName"));
+			} catch (SQLException e) {
+			}
+
 			resource.setParentIds(rs.getString("parent_ids"));
 			resource.setOrderIndex(rs.getInt("order_index"));
 			resource.setEnable(rs.getBoolean("enable"));
@@ -46,7 +53,8 @@ public class ResourceDao extends BaseDao {
 		}
 	};
 
-	private static final String getByIdSql = "select * from sys_resource where id=?";
+	private static final String getByIdSql = "select r.*,r2.name as parentName from sys_resource r"
+			+ " left join sys_resourcer2 on r.parent_id=r2.id" + " where r.id=?";
 
 	/**
 	 * 根据Id获取资源
@@ -132,7 +140,8 @@ public class ResourceDao extends BaseDao {
 	 */
 	public Page<Resource> pagingList(String name, Page<Resource> page) {
 		String countSql = "select count(id) from sys_resource where 1=1";
-		String queryByPageSql = "select * from sys_resource where 1=1";
+		String queryByPageSql = "select r.*,r2.name as parentName from sys_resource r"
+				+ " left join sys_resource r2 on r2.id=r.parent_id" + " where 1=1";
 
 		if (StringUtils.hasText(name)) {
 			countSql += " and name like :likeName";
@@ -149,5 +158,79 @@ public class ResourceDao extends BaseDao {
 		page.setTotal(super.getTotalCount(countSql, params));
 		page.setRows(super.getJdbcTemplate().query(queryByPageSql, entityRowMapper, params));
 		return page;
+	}
+
+	private static final String listByUserIdSql = "select r.* from sys_resource r"
+			+ " left join sys_role_resource rr on rr.resource_id=r.id"
+			+ " left join sys_user_role ur on ur.role_id=rr.role_id" + " where ur.user_id = ?";
+
+	/**
+	 * 根据用户Id获取资源
+	 */
+	public List<Resource> listByUserId(String userId) {
+		try {
+			List<Resource> resources = super.getJdbcTemplate().query(listByUserIdSql, entityRowMapper, userId);
+			return resources;
+		} catch (DataAccessException e) {
+		}
+		return null;
+	}
+
+	private static final String listByRoleIdSql = "select r.* from sys_resource r"
+			+ " left join sys_role_resource rr on rr.resource_id=r.id" + " where rr.role_id = ?";
+
+	/**
+	 * 根据角色Id获取资源
+	 */
+	public List<Resource> listByRoleId(String roleId) {
+		try {
+			List<Resource> resources = super.getJdbcTemplate().query(listByRoleIdSql, entityRowMapper, roleId);
+			return resources;
+		} catch (DataAccessException e) {
+		}
+		return null;
+	}
+
+	private static final String listByTypeSql = "select * from sys_resource where type=?";
+
+	/**
+	 * 根据类型获取资源
+	 */
+	public List<Resource> listByType(String type) {
+		try {
+			List<Resource> resources = super.getJdbcTemplate().query(listByTypeSql, entityRowMapper, type);
+			return resources;
+		} catch (DataAccessException e) {
+		}
+		return null;
+	}
+
+	private static final String listSubResourceSql = "select * from sys_resource where parentId=?";
+
+	/**
+	 * 根据父Id获取下属资源
+	 */
+	public List<Resource> listSubResource(String parentId) {
+		try {
+			List<Resource> resources = super.getJdbcTemplate().query(listSubResourceSql, entityRowMapper, parentId);
+			return resources;
+		} catch (DataAccessException e) {
+		}
+		return null;
+	}
+
+	private static final String listSubResourceByTypeSql = "select * from sys_resource where parentId=? and type=?";
+
+	/**
+	 * 根据父Id获取下属资源
+	 */
+	public List<Resource> listSubResourceByType(String parentId, String type) {
+		try {
+			List<Resource> resources = super.getJdbcTemplate().query(listSubResourceByTypeSql, entityRowMapper,
+					parentId, type);
+			return resources;
+		} catch (DataAccessException e) {
+		}
+		return null;
 	}
 }

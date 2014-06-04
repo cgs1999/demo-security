@@ -22,6 +22,8 @@ public class Resource extends IdEntity {
 	private String url;
 	/** 所属父资源ID */
 	private Long parentId;
+	/** 上级菜单名称 */
+	private String parentName;
 	/** 所有父资源ID，以半角逗号分隔 */
 	private String parentIds;
 	/** 排序索引 */
@@ -63,6 +65,14 @@ public class Resource extends IdEntity {
 
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 	public String getParentIds() {

@@ -48,6 +48,12 @@ public interface RoleService {
 	public boolean delete(String id);
 
 	/**
+	 * 根据所有角色列表
+	 * @return
+	 */
+	public List<RoleVO> listAll();
+
+	/**
 	 * 根据用户id获取角色列表
 	 * @return
 	 */

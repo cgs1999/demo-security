@@ -1,5 +1,7 @@
 package com.duoduo.system.service;
 
+import java.util.List;
+
 import com.duoduo.core.vo.Page;
 import com.duoduo.system.vo.ResourceVO;
 
@@ -52,4 +54,41 @@ public interface ResourceService {
 	 * @return
 	 */
 	public Page<ResourceVO> pagingList(String name, Page<ResourceVO> page);
+
+	/**
+	 * 获取用户所拥有的资源
+	 * @return
+	 */
+	public List<ResourceVO> listByUserId(String userId);
+
+	/**
+	 * 根据角色编号获取资源
+	 * @param roleId
+	 */
+	public List<ResourceVO> listByRoleId(String roleId);
+
+	/**
+	 * 根据父资源编号获取所属子资源
+	 * @param parentId
+	 * @return
+	 */
+	public List<ResourceVO> listSubResource(String parentId);
+
+	/**
+	 * 获取所有菜单，用于主界面显示菜单，特别需要注意：返回的VO只有id,parentId,name,url
+	 * @return
+	 */
+	public List<ResourceVO> listAllMenuSimple();
+
+	/**
+	 * 获取所有菜单
+	 * @return
+	 */
+	public List<ResourceVO> listAllMenu();
+
+	/**
+	 * 获取所有一级菜单
+	 * @return
+	 */
+	public List<ResourceVO> listRootMenu();
 }

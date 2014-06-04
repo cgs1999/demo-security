@@ -121,6 +121,19 @@ public class RoleDao extends BaseDao {
 		return true;
 	}
 
+	private static final String listAllSql = "select * from sys_role";
+
+	/**
+	 * 获取用户的角色列表
+	 */
+	public List<Role> listAll() {
+		try {
+			return super.getJdbcTemplate().query(listAllSql, entityRowMapper);
+		} catch (DataAccessException e) {
+		}
+		return null;
+	}
+
 	private static final String listByUserIdSql = "select r.* from sys_role r"
 			+ " left join sys_user_role ur on ur.role_id = r.id where ur.user_id = ?";
 

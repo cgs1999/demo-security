@@ -64,13 +64,13 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<RoleVO> listByUserId(String userId) {
-		List<Role> entityList = roleDao.listByUserId(userId);
-		if (entityList == null) {
-			return null;
-		}
+	public List<RoleVO> listAll() {
+		return fromEntityList(roleDao.listAll());
+	}
 
-		return fromEntityList(entityList);
+	@Override
+	public List<RoleVO> listByUserId(String userId) {
+		return fromEntityList(roleDao.listByUserId(userId));
 	}
 
 	@Override
@@ -118,8 +118,9 @@ public class RoleServiceImpl implements RoleService {
 	 * @return
 	 */
 	private List<RoleVO> fromEntityList(List<Role> entityList) {
-		List<RoleVO> voList = new ArrayList<RoleVO>(0);
+		List<RoleVO> voList = null;
 		if (entityList != null && !entityList.isEmpty()) {
+			voList = new ArrayList<RoleVO>(0);
 			for (Role entity : entityList) {
 				voList.add(RoleVO.fromEntity(entity));
 			}

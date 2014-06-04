@@ -12,7 +12,7 @@ import java.util.List;
 public class EasyUiTreeNode {
 
 	/** 节点id */
-	private Integer id;
+	private Long id;
 	/** 节点显示名称 */
 	private String text;
 	/** 下级节点列表 */
@@ -26,11 +26,11 @@ public class EasyUiTreeNode {
 	/** 自定义的节点属性 */
 	private Object attributes = null;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

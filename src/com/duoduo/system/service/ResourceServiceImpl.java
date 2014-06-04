@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.duoduo.core.vo.Page;
+import com.duoduo.system.Constants;
 import com.duoduo.system.dao.ResourceDao;
 import com.duoduo.system.model.Resource;
 import com.duoduo.system.vo.ResourceVO;
@@ -20,6 +21,8 @@ import com.duoduo.system.vo.ResourceVO;
 @Transactional
 @Service("resourceService")
 public class ResourceServiceImpl implements ResourceService {
+
+	private static final String TYPE_MENU = "1";
 
 	@javax.annotation.Resource
 	private ResourceDao resourceDao;
@@ -68,6 +71,36 @@ public class ResourceServiceImpl implements ResourceService {
 		return fromEntityPage(entityPage);
 	}
 
+	@Override
+	public List<ResourceVO> listByUserId(String userId) {
+		return fromEntityList(resourceDao.listByUserId(userId));
+	}
+
+	@Override
+	public List<ResourceVO> listByRoleId(String roleId) {
+		return fromEntityList(resourceDao.listByRoleId(roleId));
+	}
+
+	@Override
+	public List<ResourceVO> listSubResource(String parentId) {
+		return fromEntityList(resourceDao.listSubResource(parentId));
+	}
+
+	@Override
+	public List<ResourceVO> listAllMenuSimple() {
+		return toSimpleList(resourceDao.listByType(TYPE_MENU));
+	}
+
+	@Override
+	public List<ResourceVO> listAllMenu() {
+		return fromEntityList(resourceDao.listByType(TYPE_MENU));
+	}
+
+	@Override
+	public List<ResourceVO> listRootMenu() {
+		return fromEntityList(resourceDao.listSubResourceByType("" + Constants.ROOT_MENU_ID, TYPE_MENU));
+	}
+
 	/**
 	 * 转换Page &lt;VO&gt; 为 Page &lt;Entity&gt;
 	 * @param voPage
@@ -106,10 +139,27 @@ public class ResourceServiceImpl implements ResourceService {
 	 * @return
 	 */
 	private List<ResourceVO> fromEntityList(List<Resource> entityList) {
-		List<ResourceVO> voList = new ArrayList<ResourceVO>(0);
+		List<ResourceVO> voList = null;
 		if (entityList != null && !entityList.isEmpty()) {
+			voList = new ArrayList<ResourceVO>(0);
 			for (Resource entity : entityList) {
 				voList.add(ResourceVO.fromEntity(entity));
+			}
+		}
+		return voList;
+	}
+
+	/**
+	 * 转换List &lt;Entity&gt; 为简单的 List &lt;VO&gt;
+	 * @param voList
+	 * @return
+	 */
+	private List<ResourceVO> toSimpleList(List<Resource> entityList) {
+		List<ResourceVO> voList = null;
+		if (entityList != null && !entityList.isEmpty()) {
+			voList = new ArrayList<ResourceVO>(0);
+			for (Resource entity : entityList) {
+				voList.add(ResourceVO.toSimpleVO(entity));
 			}
 		}
 		return voList;
