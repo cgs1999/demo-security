@@ -21,5 +21,13 @@
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="extend-lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-security-acl-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-security-aspects-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-security-cas-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-security-config-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-security-core-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-security-crypto-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-security-taglibs-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-security-web-3.2.4.RELEASE.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
